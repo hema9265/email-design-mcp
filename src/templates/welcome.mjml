@@ -1,0 +1,65 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all font-family="{{bodyFont}}, Arial, sans-serif" />
+      <mj-text font-size="16px" line-height="1.5" color="{{textColor}}" />
+      <mj-button font-size="16px" border-radius="4px" />
+    </mj-attributes>
+    <mj-style>
+      .preheader { display: none; max-height: 0; overflow: hidden; }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="{{backgroundColor}}">
+    <!-- section:header -->
+    <mj-section padding="20px 20px 10px">
+      <mj-column>
+        <mj-text align="center" font-size="24px" font-family="{{headingFont}}, Arial, sans-serif" font-weight="bold" color="{{primaryColor}}">
+          {{brandName}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- section:hero -->
+    <mj-section padding="10px 20px">
+      <mj-column>
+        <mj-image src="https://placehold.co/600x300" alt="Welcome" width="600px" />
+      </mj-column>
+    </mj-section>
+
+    <!-- section:body -->
+    <mj-section padding="20px">
+      <mj-column>
+        <mj-text font-size="24px" font-family="{{headingFont}}, Arial, sans-serif" font-weight="bold" align="center">
+          Welcome aboard!
+        </mj-text>
+        <mj-text padding-top="16px">
+          We're thrilled to have you join us. You're now part of a community that values quality and innovation.
+        </mj-text>
+        <mj-text>
+          Here's what you can look forward to — curated content, exclusive offers, and insider updates delivered straight to your inbox.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- section:cta -->
+    <mj-section padding="10px 20px 30px">
+      <mj-column>
+        <mj-button background-color="{{primaryColor}}" color="#ffffff" href="#" padding="16px 32px">
+          Get Started
+        </mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- section:footer -->
+    <mj-section padding="20px" background-color="#f4f4f4">
+      <mj-column>
+        <mj-text font-size="12px" color="#999999" align="center">
+          {{brandName}} | 123 Main Street, City, ST 12345
+        </mj-text>
+        <mj-text font-size="12px" color="#999999" align="center">
+          <a href="#" style="color: #999999;">Unsubscribe</a> | <a href="#" style="color: #999999;">View in browser</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
