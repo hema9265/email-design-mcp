@@ -9,6 +9,7 @@ const TEMPLATE_CATALOG = [
   { id: 'welcome', name: 'Welcome Email', description: 'Hero + intro text + CTA for new subscribers' },
   { id: 'newsletter', name: 'Newsletter', description: 'Header + multiple content blocks + footer' },
   { id: 'promotional', name: 'Promotional', description: 'Hero image + offer + CTA + urgency' },
+  { id: 'transactional', name: 'Transactional', description: 'Order confirmation with itemized details + clean layout' },
 ];
 
 export async function listTemplateResources(): Promise<Array<{ uri: string; name: string; description: string }>> {

@@ -14,11 +14,13 @@ const MINIMAL_HTML = `<!DOCTYPE html>
 const FULL_HTML = `<!DOCTYPE html>
 <html>
 <head>
+  <title>Welcome to Our Brand</title>
   <meta name="viewport" content="width=device-width">
   <style>:root { color-scheme: light dark; }</style>
 </head>
 <body>
-  <h1>Welcome!</h1>
+  <div class="preheader" style="display:none;">Preview text for inbox</div>
+  <h1 style="font-size:24px;">Welcome!</h1>
   <p>This is a test email with enough text content to pass the ratio check. We want to make sure that
   the validator sees enough text here to consider the text-to-image ratio acceptable. Adding more text
   to get past the 300 character threshold for the check to pass cleanly.</p>

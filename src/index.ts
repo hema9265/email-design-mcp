@@ -13,10 +13,16 @@ import { listBrandResources, readBrandResource } from './resources/brand.js';
 import { listTemplateResources, readTemplateResource } from './resources/templates.js';
 import { listHistoryResources, readHistoryResource } from './resources/history.js';
 import { startPreviewServer, notifyReload } from './preview/server.js';
+import { cleanupOldHistory } from './lib/storage-housekeeping.js';
+import { WELCOME_PROMPT_DESCRIPTION, WELCOME_PROMPT_ARGS, buildWelcomePromptMessages } from './prompts/mcp-prompts/welcome.js';
+import { NEWSLETTER_PROMPT_DESCRIPTION, NEWSLETTER_PROMPT_ARGS, buildNewsletterPromptMessages } from './prompts/mcp-prompts/newsletter.js';
+import { PROMOTIONAL_PROMPT_DESCRIPTION, PROMOTIONAL_PROMPT_ARGS, buildPromotionalPromptMessages } from './prompts/mcp-prompts/promotional.js';
+import { TRANSACTIONAL_PROMPT_DESCRIPTION, TRANSACTIONAL_PROMPT_ARGS, buildTransactionalPromptMessages } from './prompts/mcp-prompts/transactional.js';
+import { listBrands } from './lib/storage.js';
 
 const server = new McpServer({
   name: 'email-design-mcp',
-  version: '0.2.0',
+  version: '0.3.0',
 });
 
 // --- Tools ---
@@ -30,7 +36,7 @@ server.tool(
 
 server.tool(
   'setup_brand',
-  'Save a brand profile with colors, fonts, tone, and identity. This brand context is used by generate_email to create on-brand emails. Call this before generating emails for personalized results.',
+  'Save a brand profile with colors, fonts, tone, and identity. Provide a website URL to auto-extract brand colors, fonts, and logo — or specify them manually. This brand context is used by generate_email to create on-brand emails.',
   setupBrandSchema.shape,
   async (args) => setupBrandHandler(setupBrandSchema.parse(args)),
 );
@@ -117,12 +123,65 @@ server.resource(
   },
 );
 
+// --- Prompts (Guided Workflows) ---
+
+async function getLatestBrand() {
+  const brands = await listBrands();
+  if (brands.length === 0) return null;
+  return brands.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0];
+}
+
+server.prompt(
+  'welcome-email',
+  WELCOME_PROMPT_DESCRIPTION,
+  WELCOME_PROMPT_ARGS,
+  async (args) => {
+    const brand = await getLatestBrand();
+    return buildWelcomePromptMessages(args, brand);
+  },
+);
+
+server.prompt(
+  'newsletter',
+  NEWSLETTER_PROMPT_DESCRIPTION,
+  NEWSLETTER_PROMPT_ARGS,
+  async (args) => {
+    const brand = await getLatestBrand();
+    return buildNewsletterPromptMessages(args, brand);
+  },
+);
+
+server.prompt(
+  'promotional',
+  PROMOTIONAL_PROMPT_DESCRIPTION,
+  PROMOTIONAL_PROMPT_ARGS,
+  async (args) => {
+    const brand = await getLatestBrand();
+    return buildPromotionalPromptMessages(args, brand);
+  },
+);
+
+server.prompt(
+  'transactional',
+  TRANSACTIONAL_PROMPT_DESCRIPTION,
+  TRANSACTIONAL_PROMPT_ARGS,
+  async (args) => {
+    const brand = await getLatestBrand();
+    return buildTransactionalPromptMessages(args, brand);
+  },
+);
+
 // --- Server startup ---
 
 async function main() {
   // Start preview server in background (non-blocking)
   startPreviewServer().catch(() => {
     // Preview server is optional — don't block MCP startup
+  });
+
+  // Run storage housekeeping in background (non-blocking)
+  cleanupOldHistory().catch(() => {
+    // Housekeeping is optional — don't block MCP startup
   });
 
   const transport = new StdioServerTransport();

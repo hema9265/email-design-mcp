@@ -612,16 +612,17 @@ Each template is MJML with placeholder variables:
 - [x] MCP Resources (brand, templates, history)
 - [x] `export_email` tool
 
-### Phase 4: Polish
-- [ ] MCP Prompts (guided workflows)
-- [ ] More templates
-- [ ] Better validation
-- [ ] Storage housekeeping (auto-cleanup old history)
-- [ ] Documentation + installation guide
-- [ ] npm publish
+### Phase 4: Polish ✅
+- [x] MCP Prompts (guided workflows) — welcome-email, newsletter, promotional, transactional
+- [x] More templates — transactional template (order confirmation with itemized details)
+- [x] Better validation — preheader text, HTML title, inline styles checks (10 checks total)
+- [x] Storage housekeeping (auto-cleanup old history) — 30-day retention, configurable via config.json
+- [x] Documentation + installation guide — comprehensive README.md
+- [x] npm publish prep — package.json files, keywords, repository, prepublishOnly script
+- [x] Transactional layout variants — order-confirmation, shipping-notification, receipt (12 variants total)
 
 ### Phase 5: Enhancements (post-MVP)
-- [ ] Website scraping for brand extraction (cheerio + css-tree)
+- [x] Website scraping for brand extraction (cheerio — auto-extracts colors, fonts, logo, name from URL)
 - [ ] Image thumbnail in chat (Puppeteer/Playwright screenshot rendering)
 - [ ] Figma to email (Figma API integration)
 - [ ] Direct ESP push (Klaviyo, Mailchimp, HubSpot APIs)

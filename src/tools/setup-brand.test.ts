@@ -8,6 +8,22 @@ vi.mock('../lib/storage.js', () => ({
   listBrands: vi.fn().mockResolvedValue([]),
 }));
 
+// Mock brand extractor
+vi.mock('../lib/brand-extractor.js', () => ({
+  extractBrandFromUrl: vi.fn().mockResolvedValue({
+    name: 'Example Site',
+    logo: 'https://example.com/logo.png',
+    colors: ['#e74c3c', '#3498db', '#2ecc71'],
+    fonts: ['Roboto', 'Open Sans'],
+    description: 'An example website',
+  }),
+  pickBrandColors: vi.fn().mockReturnValue({
+    primary: '#e74c3c',
+    secondary: '#3498db',
+    accent: '#2ecc71',
+  }),
+}));
+
 describe('setup-brand', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -73,5 +89,46 @@ describe('setup-brand', () => {
 
     const parsed = JSON.parse(result.content[0].text);
     expect(parsed.brand.id).toBe('my-awesome-brand');
+  });
+
+  it('errors when neither name nor url is provided', async () => {
+    const result = await setupBrandHandler({});
+
+    const parsed = JSON.parse(result.content[0].text);
+    expect(parsed.success).toBe(false);
+    expect(parsed.error).toContain('name or a website URL');
+  });
+
+  it('auto-extracts brand details from url', async () => {
+    const result = await setupBrandHandler({
+      url: 'https://example.com',
+    });
+
+    const parsed = JSON.parse(result.content[0].text);
+    expect(parsed.success).toBe(true);
+    expect(parsed.brand.name).toBe('Example Site');
+    expect(parsed.brand.colors.primary).toBe('#e74c3c');
+    expect(parsed.brand.fonts.heading).toBe('Roboto');
+    expect(parsed.brand.fonts.body).toBe('Open Sans');
+    expect(parsed.brand.logo).toBe('https://example.com/logo.png');
+    expect(parsed.extraction).toContain('Auto-extracted');
+    expect(parsed.extractedColors).toEqual(['#e74c3c', '#3498db', '#2ecc71']);
+  });
+
+  it('explicit args override extracted values', async () => {
+    const result = await setupBrandHandler({
+      url: 'https://example.com',
+      name: 'Override Name',
+      primary_color: '#FF0000',
+      heading_font: 'Inter',
+    });
+
+    const parsed = JSON.parse(result.content[0].text);
+    expect(parsed.success).toBe(true);
+    expect(parsed.brand.name).toBe('Override Name');
+    expect(parsed.brand.colors.primary).toBe('#FF0000');
+    expect(parsed.brand.fonts.heading).toBe('Inter');
+    // Body font should still come from extraction
+    expect(parsed.brand.fonts.body).toBe('Open Sans');
   });
 });

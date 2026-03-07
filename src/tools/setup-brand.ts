@@ -1,43 +1,94 @@
 import { z } from 'zod';
 import { randomUUID } from 'node:crypto';
 import { saveBrand, loadBrand, listBrands } from '../lib/storage.js';
+import { extractBrandFromUrl, pickBrandColors } from '../lib/brand-extractor.js';
 import type { BrandProfile } from '../types/brand.js';
 
 export const setupBrandSchema = z.object({
-  name: z.string().describe('Brand name'),
-  url: z.string().optional().describe('Brand website URL (for future auto-extraction)'),
-  primary_color: z.string().describe('Primary brand color (hex, e.g., "#FF6B35")'),
+  name: z.string().optional().describe('Brand name. Auto-detected from website if url is provided.'),
+  url: z.string().optional().describe('Brand website URL. If provided, colors/fonts/logo are auto-extracted from the site.'),
+  primary_color: z.string().optional().describe('Primary brand color (hex, e.g., "#FF6B35"). Auto-extracted if url is provided.'),
   secondary_color: z.string().optional().describe('Secondary color (hex). Defaults to a muted version of primary.'),
   accent_color: z.string().optional().describe('Accent color (hex). Defaults to primary.'),
   background_color: z.string().optional().describe('Background color (hex). Defaults to "#ffffff".'),
   text_color: z.string().optional().describe('Text color (hex). Defaults to "#1a1a1a".'),
   heading_font: z.string().optional().describe('Heading font family. Defaults to "Arial".'),
   body_font: z.string().optional().describe('Body font family. Defaults to "Arial".'),
-  logo: z.string().optional().describe('Logo image URL'),
+  logo: z.string().optional().describe('Logo image URL. Auto-extracted if url is provided.'),
   industry: z.string().optional().describe('Industry (e.g., "e-commerce", "SaaS", "healthcare")'),
   audience: z.string().optional().describe('Target audience (e.g., "young professionals", "enterprise buyers")'),
   tone: z.enum(['formal', 'casual', 'friendly', 'professional']).optional().describe('Brand voice tone. Defaults to "professional".'),
 });
 
 export async function setupBrandHandler(args: z.infer<typeof setupBrandSchema>) {
+  // If neither name nor url provided, error
+  if (!args.name && !args.url) {
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text: JSON.stringify({
+            success: false,
+            error: 'Provide at least a brand name or a website URL.',
+            hint: 'Use url to auto-extract brand details, or provide name and primary_color manually.',
+          }, null, 2),
+        },
+      ],
+      isError: true,
+    };
+  }
+
+  let extracted: {
+    name?: string;
+    logo?: string;
+    colors: string[];
+    fonts: string[];
+    description?: string;
+  } | null = null;
+
+  let extractionNote = '';
+
+  // Auto-extract from URL if provided
+  if (args.url) {
+    try {
+      extracted = await extractBrandFromUrl(args.url);
+      const parts: string[] = [];
+      if (extracted.colors.length > 0) parts.push(`${extracted.colors.length} colors`);
+      if (extracted.fonts.length > 0) parts.push(`${extracted.fonts.length} fonts`);
+      if (extracted.logo) parts.push('logo');
+      if (extracted.name) parts.push('name');
+      extractionNote = parts.length > 0
+        ? `Auto-extracted from ${args.url}: ${parts.join(', ')}.`
+        : `Fetched ${args.url} but couldn't extract brand details. Using provided/default values.`;
+    } catch (err) {
+      extractionNote = `Could not fetch ${args.url}: ${err instanceof Error ? err.message : 'unknown error'}. Using provided/default values.`;
+    }
+  }
+
+  // Merge: explicit args override extracted values
+  const brandColors = extracted ? pickBrandColors(extracted.colors) : null;
+
+  const brandName = args.name || extracted?.name || 'My Brand';
+  const primaryColor = args.primary_color || brandColors?.primary || '#2563eb';
+
   const now = new Date().toISOString();
 
   const brand: BrandProfile = {
-    id: args.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || randomUUID(),
+    id: brandName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || randomUUID(),
     url: args.url || '',
-    name: args.name,
+    name: brandName,
     colors: {
-      primary: args.primary_color,
-      secondary: args.secondary_color || adjustColor(args.primary_color, 0.3),
-      accent: args.accent_color || args.primary_color,
+      primary: primaryColor,
+      secondary: args.secondary_color || brandColors?.secondary || adjustColor(primaryColor, 0.3),
+      accent: args.accent_color || brandColors?.accent || primaryColor,
       background: args.background_color || '#ffffff',
       text: args.text_color || '#1a1a1a',
     },
     fonts: {
-      heading: args.heading_font || 'Arial',
-      body: args.body_font || 'Arial',
+      heading: args.heading_font || (extracted?.fonts[0]) || 'Arial',
+      body: args.body_font || (extracted?.fonts[1] || extracted?.fonts[0]) || 'Arial',
     },
-    logo: args.logo,
+    logo: args.logo || extracted?.logo,
     industry: args.industry || 'general',
     audience: args.audience || 'general audience',
     tone: args.tone || 'professional',
@@ -65,6 +116,9 @@ export async function setupBrandHandler(args: z.infer<typeof setupBrandSchema>) 
             message: existing
               ? `Brand "${brand.name}" updated successfully.`
               : `Brand "${brand.name}" saved successfully.`,
+            ...(extractionNote ? { extraction: extractionNote } : {}),
+            ...(extracted?.colors.length ? { extractedColors: extracted.colors } : {}),
+            ...(extracted?.fonts.length ? { extractedFonts: extracted.fonts } : {}),
             brand,
             totalBrands: allBrands.length,
             hint: 'Use this brand with generate_email by setting brand_id to "' + brand.id + '".',

@@ -164,6 +164,37 @@ export function validateEmail(html: string): ValidationResult {
       : 'No viewport meta tag found. MJML usually adds this automatically.',
   });
 
+  // 8. Preheader text check
+  const hasPreheader = /preheader|preview.?text/i.test(html);
+  checks.push({
+    name: 'preheader-text',
+    status: hasPreheader ? 'pass' : 'warn',
+    message: hasPreheader
+      ? 'Preheader/preview text found.'
+      : 'No preheader text detected. Adding hidden preview text improves open rates in inbox previews.',
+  });
+
+  // 9. HTML title tag
+  const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
+  const hasTitle = titleMatch && titleMatch[1].trim().length > 0;
+  checks.push({
+    name: 'html-title',
+    status: hasTitle ? 'pass' : 'warn',
+    message: hasTitle
+      ? 'HTML title tag found.'
+      : 'Empty or missing <title> tag. Some email clients show this in the subject line area.',
+  });
+
+  // 10. Inline styles present (email best practice)
+  const hasInlineStyles = /style\s*=\s*"/i.test(html);
+  checks.push({
+    name: 'inline-styles',
+    status: hasInlineStyles ? 'pass' : 'warn',
+    message: hasInlineStyles
+      ? 'Inline styles detected (good for email client compatibility).'
+      : 'No inline styles found. Many email clients strip <style> blocks — inline styles are more reliable.',
+  });
+
   // Calculate scores
   const passed = checks.filter((c) => c.status === 'pass').length;
   const failed = checks.filter((c) => c.status === 'fail').length;

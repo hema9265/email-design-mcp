@@ -7,6 +7,9 @@ import { NEWSLETTER_EDITORIAL } from './newsletter/variant-editorial.js';
 import { PROMO_COUNTDOWN } from './promotional/variant-countdown.js';
 import { PROMO_PRODUCT_GRID } from './promotional/variant-product-grid.js';
 import { PROMO_SINGLE_HERO } from './promotional/variant-single-hero.js';
+import { TRANSACTIONAL_ORDER_CONFIRMATION } from './transactional/variant-order-confirmation.js';
+import { TRANSACTIONAL_SHIPPING } from './transactional/variant-shipping-notification.js';
+import { TRANSACTIONAL_RECEIPT } from './transactional/variant-receipt.js';
 import type { EmailType } from '../../types/email.js';
 
 export interface LayoutVariant {
@@ -19,6 +22,7 @@ const layoutVariants: Record<string, LayoutVariant[]> = {
   welcome: [WELCOME_HERO_CTA, WELCOME_STORY_DRIVEN, WELCOME_MINIMALIST],
   newsletter: [NEWSLETTER_MAGAZINE, NEWSLETTER_DIGEST, NEWSLETTER_EDITORIAL],
   promotional: [PROMO_COUNTDOWN, PROMO_PRODUCT_GRID, PROMO_SINGLE_HERO],
+  transactional: [TRANSACTIONAL_ORDER_CONFIRMATION, TRANSACTIONAL_SHIPPING, TRANSACTIONAL_RECEIPT],
 };
 
 export function getLayoutVariants(emailType: EmailType): LayoutVariant[] {

@@ -78,11 +78,8 @@ Tools are registered in `src/index.ts` using the MCP SDK's `server.tool()` metho
 
 ## Build Phases
 
-Currently building **Phase 1: Foundation**
-- Project setup (TypeScript, MCP SDK, MJML)
-- Basic MCP server with stdio transport
-- `compile_mjml` tool (simplest tool, proves MCP works)
-- Test with Claude Desktop
+Phases 1-4 complete. Currently at **Phase 5: Enhancements (post-MVP)**
+- See ARCHITECTURE.md for full phase details
 
 ## Key Dependencies
 
