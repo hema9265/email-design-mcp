@@ -1,0 +1,42 @@
+{
+  "name": "email-design-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for AI-assisted email template design and generation",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "email-design-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "mcp",
+    "email",
+    "mjml",
+    "ai",
+    "design",
+    "template"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "mjml": "^5.0.0-alpha.4",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
